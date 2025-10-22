@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epiclen.ai_agent.mapper.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.epiclen.ai_agent.entity.News">
+        <id column="news_id" property="newsId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="category" property="category" jdbcType="VARCHAR" />
+        <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+        <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" />
+        <result column="views" property="views" jdbcType="INTEGER" />
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        news_id, title, content, author, category, publish_date, last_update, status, views, image_url
+    </sql>
+
+    <insert id="insert" parameterType="com.epiclen.ai_agent.entity.News">
+        INSERT INTO news (
+             title, content, author, category, status, views, image_url
+        )
+        VALUES (
+            
+            #{ title,jdbcType=VARCHAR },
+            #{ content,jdbcType=LONGVARCHAR },
+            #{ author,jdbcType=VARCHAR },
+            #{ category,jdbcType=VARCHAR },
+            #{ status},
+            #{ views,jdbcType=INTEGER },
+            #{ imageUrl,jdbcType=VARCHAR }
+        )
+    </insert>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM news
+        WHERE news_id = #{ newsId,jdbcType=INTEGER }
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="com.epiclen.ai_agent.entity.News">
+        UPDATE news
+        SET
+            title = #{ title,jdbcType=VARCHAR },
+            content = #{ content,jdbcType=LONGVARCHAR },
+            author = #{ author,jdbcType=VARCHAR },
+            category = #{ category,jdbcType=VARCHAR },
+            publish_date = #{ publishDate,jdbcType=TIMESTAMP },
+            last_update = #{ lastUpdate,jdbcType=TIMESTAMP },
+            status = #{ status},
+            views = #{ views,jdbcType=INTEGER },
+            image_url = #{ imageUrl,jdbcType=VARCHAR }
+        WHERE news_id = #{ newsId,jdbcType=INTEGER }
+    </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM news
+        WHERE news_id = #{ newsId,jdbcType=INTEGER }
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM news limit #{ start,jdbcType=INTEGER}, #{ end,jdbcType=INTEGER}
+    </select>
+</mapper>

@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 
 Future<News> fetchNews(int id) async {
-  final response = await http.get(Uri.parse('$SERVICE_URL$NEWS_PATH/${id}'));
+  final response = await http.get(Uri.parse('$SERVICE_URL$NEWS_PATH/$id'));
 
   if (response.statusCode == 200) {
     News result;
@@ -21,7 +21,7 @@ Future<News> fetchNews(int id) async {
 
 Future<List<News>> fetchNewsList() async {
   final response = await http.get(
-    Uri.parse(SERVICE_URL + NEWS_PATH + '?start=0&end=10'),
+    Uri.parse('$SERVICE_URL$NEWS_PATH?start=0&end=10'),
   );
 
   if (response.statusCode == 200) {

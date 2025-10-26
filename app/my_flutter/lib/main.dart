@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/welcome.dart';
 import 'account.dart';
-import 'news.dart';
 
 void main() {
   runApp(const MyApp());
